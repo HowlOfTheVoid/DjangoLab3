@@ -2,6 +2,7 @@
 <html lang="en">
     <head>
         {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'onlinecourse/course.css' %}">
         <meta charset="UTF-8">
         <title>Online Courses</title>
     </head>
@@ -10,15 +11,21 @@
         {% if course_list %}
             <ul>
                 {% for course in course_list %}
-                    <div>
-                        <img src="{{ MEDIA_URL }}/{{ course.image }}" width="360" height="360" >
-                        <h1><b>{{ course.name }}</b></h1>
-                        <p>{{ course.total_enrollment }} students enrolled </p>
-                        <p>{{ course.description }}</p>
-                        <form action="{% url 'onlinecourse:enroll' course.id %}" method="post">
-                            {% csrf_token %}
-                            <input type="submit" value="Enroll">
-                        </form>
+                    <div class="container">
+                        <div class="row">
+                            <div class="column-33">
+                                <img src="{{ MEDIA_URL }}/{{ course.image }}" width="360" height="360" >
+                            </div>
+                            <div class="column-66">
+                                <h1><b>{{ course.name }}</b></h1>
+                                <p>{{ course.total_enrollment }} students enrolled </p>
+                                <p>{{ course.description }}</p>
+                            </div>
+                            <form action="{% url 'onlinecourse:enroll' course.id %}" method="post">
+                                {% csrf_token %}
+                                <input type="submit" value="Enroll">
+                            </form>
+                        </div>
                     </div>
                 {% endfor %}
             </ul>
