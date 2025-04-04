@@ -17,3 +17,13 @@ def popular_course_list(request):
         # Add course list as an entry in the context, to be picked up by templates.
         context['course_list'] = course_list
         return render(request, 'onlinecourse/course_list.html', context)
+
+def enroll(request, course_id):
+    if request.method == 'POST':
+        # First, read course object. If not found, raise 404
+        course = get_object_or_404(Course, pk=course_id)
+
+        course.total_enrollment += 1
+        course.save()
+
+        return HttpResponseRedirect(reverse(viewname='onlinecourse:popular_course_list'))
